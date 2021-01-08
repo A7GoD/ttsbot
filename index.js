@@ -1,4 +1,3 @@
-const config = require("./config.json");
 const custom = require("./custom.json");
 const discord = require("discord.js");
 const tts = require("discord-tts");
