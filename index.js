@@ -1,4 +1,3 @@
-const config = require("./config.json");
 const custom = require("./custom.json");
 const discord = require("discord.js");
 const tts = require("discord-tts");
@@ -62,7 +61,7 @@ client.on("voiceStateUpdate", (prevState, newState) => {
   }
 });
 
-client.login(config.auth_token);
+client.login(auth_token);
 
 channelCheck = (prevState, newState) => {
   if (prevState.channelID !== newState.channelID) {
