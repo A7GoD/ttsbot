@@ -11,6 +11,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "engines": { 
+   "node": "14.13.1" 
+  },
   "dependencies": {
     "@discordjs/opus": "^0.3.3",
     "discord-tts": "^1.0.3",
