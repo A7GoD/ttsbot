@@ -61,7 +61,7 @@ client.on("voiceStateUpdate", (prevState, newState) => {
   }
 });
 
-client.login(auth_token);
+client.login(process.env.auth_token);
 
 channelCheck = (prevState, newState) => {
   if (prevState.channelID !== newState.channelID) {
