@@ -16,8 +16,41 @@ client.on("ready", () => {
 });
 
 client.on("message", (msg) => {
-  if (msg.content[0] === "~") {
-    console.log("uwu");
+  let message = msg.content;
+  if (message.startsWith("~")) {
+    command = message.slice(1, message.length).split(" ")[0];
+
+    switch (command) {
+      case "say":
+        sentence = message.replace("~say ", "");
+        const broadcast = client.voice.createBroadcast();
+        const user = msg.guild.member(msg.author);
+        if (user.voice.channel) {
+          user.voice.channel
+            .join()
+            .then((con) => {
+              broadcast.end();
+              if (messages.find((user) => user.id === msg.author.id)) {
+                broadcast.play(tts.getVoiceStream(`${sentence}`));
+              } else {
+                broadcast.play(
+                  tts.getVoiceStream(
+                    `Shush, ${
+                      user.nickname ?? user.displayName
+                    }, am not in mood.`
+                  )
+                );
+              }
+              const dispatcher = con.play(broadcast);
+            })
+            .catch(() => {
+              msg.reply("couldn't connect to the VC, let me innnn!");
+            });
+        } else msg.reply("You need to be in a VC to use this feature. Baaka");
+        break;
+      default:
+        msg.reply("Command not recognised.");
+    }
   }
 });
 
@@ -34,8 +67,8 @@ client.on("voiceStateUpdate", async (prevState, newState) => {
         con.setSpeaking("SPEAKING");
         if (stream ?? 0) stream.end();
         const ob = messages.find((user) => user.id === newState.member.id);
+        broadcast.end();
         if (ob) {
-          broadcast.end();
           setTimeout(() => {
             broadcast.play(tts.getVoiceStream(ob.msg));
           }, delay);
