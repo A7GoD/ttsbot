@@ -1,3 +1,5 @@
+const dotenv = require("dotenv").config();
+
 const custom = require("./custom.json");
 const discord = require("discord.js");
 const tts = require("discord-tts");
@@ -12,6 +14,7 @@ let stream = null;
 const messages = custom.joinMessages;
 
 client.on("ready", () => {
+  client.user.setUsername("vibecheck");
   console.log("Bot is running.");
 });
 
@@ -109,7 +112,7 @@ client.on("voiceStateUpdate", async (prevState, newState) => {
   }
 });
 
-client.login(process.env.auth_token);
+client.login(process.env.AUTH_TOKEN);
 
 channelCheck = (prevState, newState) => {
   if (prevState.channelID !== newState.channelID) {
