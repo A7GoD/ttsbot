@@ -23,7 +23,7 @@ client.on("message", (msg) => {
     switch (command) {
       case "say":
         sentence = message.replace("~say ", "");
-        console.log(setence);
+        console.log(sentence);
         const broadcast = client.voice.createBroadcast();
         const user = msg.guild.member(msg.author);
         if (user.voice.channel) {
