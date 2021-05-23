@@ -23,7 +23,6 @@ client.on("message", (msg) => {
     switch (command) {
       case "say":
         sentence = message.replace("~say ", "");
-        console.log(sentence);
         const broadcast = client.voice.createBroadcast();
         const user = msg.guild.member(msg.author);
         if (user.voice.channel) {
@@ -32,6 +31,7 @@ client.on("message", (msg) => {
             .then((con) => {
               broadcast.end();
               if (messages.find((user) => user.id === msg.author.id)) {
+                 console.log("Saying: "+sentence);
                 broadcast.play(tts.getVoiceStream(`${sentence}`));
               } else {
                 broadcast.play(
