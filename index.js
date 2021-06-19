@@ -39,9 +39,8 @@ client.on("message", (msg) => {
 									(user) => user.id === msg.author.id
 								)
 							) {
-								console.log(`saying: ${sentence}`);
 								broadcast.play(
-									tts.getVoiceStream(sentence as string)
+									tts.getVoiceStream(sentence)
 								);
 							} else {
 								broadcast.play(
