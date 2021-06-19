@@ -3,7 +3,6 @@ const discord = require("discord.js");
 const tts = require("discord-tts");
 
 const client = new discord.Client();
-client.login(process.env.auth_token);
 
 let prefix = "~";
 let delay = 1000;
@@ -129,6 +128,8 @@ client.on("voiceStateUpdate", async (prevState, newState) => {
 			.catch(() => console.log("error"));
 	}
 });
+
+client.login(process.env.auth_token);
 
 channelCheck = (prevState, newState) => {
 	if (prevState.channelID !== newState.channelID) {
