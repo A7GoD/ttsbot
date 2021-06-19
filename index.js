@@ -35,12 +35,12 @@ client.on("message", (msg) => {
 									(user) => user.id === msg.author.id
 								)
 							) {
-								console.log(`saying: ${sentence}`);
 								setTimeout(
-									() =>
+									() =>{
+										console.log(`saying: ${sentence}`);
 										broadcast.play(
 											tts.getVoiceStream(`${sentence}`)
-										),
+										)},
 									delay
 								);
 							} else {
