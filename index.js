@@ -38,18 +38,9 @@ client.on("message", (msg) => {
 								setTimeout(
 									() =>
 										broadcast.play(
-											tts.getVoiceStream(
-												`${
-													newState.member.nickname ??
-													newState.member.displayName
-												} has joined.`
-											)
+											tts.getVoiceStream(`${sentence}`)
 										),
 									delay
-								);
-
-								broadcast.play(
-									tts.getVoiceStream(`${sentence}`)
 								);
 							} else {
 								broadcast.play(
