@@ -4,6 +4,10 @@ const tts = require("discord-tts");
 
 const client = new discord.Client();
 
+const TTSOptions = {
+	lang: 'en'
+}
+
 let prefix = "~";
 let delay = 1000;
 
@@ -37,13 +41,12 @@ client.on("message", (msg) => {
 							) {
 								console.log(`saying: ${sentence}`);
 								broadcast.play(
-									tts.getVoiceStream(`${sentence}`)
-								)},
+									tts.getVoiceStream(`${sentence}`, TTSOptions)
+								)
 							} else {
 								broadcast.play(
 									tts.getVoiceStream(
-										`Shush, ${
-											user.nickname ?? user.displayName
+										`Shush, ${user.nickname ?? user.displayName
 										}, am not in mood.`
 									)
 								);
@@ -91,9 +94,8 @@ client.on("voiceStateUpdate", async (prevState, newState) => {
 						() =>
 							broadcast.play(
 								tts.getVoiceStream(
-									`${
-										newState.member.nickname ??
-										newState.member.displayName
+									`${newState.member.nickname ??
+									newState.member.displayName
 									} has joined.`
 								)
 							),
@@ -113,9 +115,8 @@ client.on("voiceStateUpdate", async (prevState, newState) => {
 			.then((con) => {
 				broadcast.play(
 					tts.getVoiceStream(
-						`${
-							newState.member.nickname ??
-							newState.member.displayName
+						`${newState.member.nickname ??
+						newState.member.displayName
 						} has left.`
 					)
 				);
