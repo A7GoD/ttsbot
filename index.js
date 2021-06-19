@@ -41,7 +41,7 @@ client.on("message", (msg) => {
 							) {
 								console.log(`saying: ${sentence}`);
 								broadcast.play(
-									tts.getVoiceStream("sentence i have to speak")
+									tts.getVoiceStream(sentence as string)
 								);
 							} else {
 								broadcast.play(
