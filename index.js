@@ -73,7 +73,7 @@ client.on("message", (msg) => {
               (user) => `${msg.guild.member(user).displayName} `
             )}`
           );
-        } else console.log("This command can only be used by an admin.");
+        } else msg.reply("This command can only be used by an admin.");
         break;
 
       case "toggle":
@@ -82,13 +82,13 @@ client.on("message", (msg) => {
 
           if (command in featureToggle) {
             featureToggle[command] = !featureToggle[command];
-            console.log(
+            msg.reply(
               `${command} command has been ${
                 featureToggle[command] ? "enabled" : "disabled"
               }.`
             );
-          } else console.log("Feature not recognized or cannot be toggled");
-        } else console.log("This command can only be used by an admin.");
+          } else msg.reply("Feature not recognized or cannot be toggled");
+        } else msg.reply("This command can only be used by an admin.");
         break;
 
       default:
