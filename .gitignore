@@ -4,3 +4,4 @@
 config.json
 log.json
 index_v1.js
+.env
