@@ -98,7 +98,7 @@ client.on("message", (msg) => {
 });
 
 client.on("voiceStateUpdate", async (prevState, newState) => {
-  if (featureToggle["join-message"]) return;
+  if (!featureToggle["join-message"]) return;
 
   const broadcast = client.voice.createBroadcast();
   if (
