@@ -7,8 +7,9 @@ dotnev.config();
 
 const client = new discord.Client();
 
-const TTSOptions = {
-  lang: "en",
+const featureToggle = {
+  say: true,
+  "join-message": true,
 };
 
 let prefix = "~";
@@ -29,9 +30,12 @@ client.on("message", (msg) => {
   if (message.startsWith("~")) {
     command = message.slice(1, message.length).split(" ")[0];
     const user = msg.guild.member(msg.author);
+    const isAdmin = user.permissions.has("ADMINISTRATOR", true);
 
     switch (command) {
       case "say":
+        if (!featureToggle.say) break;
+
         sentence = message.replace("~say ", "");
         const broadcast = client.voice.createBroadcast();
         if (user.voice.channel) {
@@ -53,15 +57,15 @@ client.on("message", (msg) => {
                   )
                 );
               }
-              const dispatcher = con.play(broadcast);
+              con.play(broadcast);
             })
             .catch(() => {
               msg.reply("couldn't connect to the VC, let me innnn!");
             });
         } else msg.reply("You need to be in a VC to use this feature. Baaka");
         break;
+
       case "permit":
-        const isAdmin = user.permissions.has("ADMINISTRATOR", true);
         if (isAdmin) {
           msg.mentions.users.map((user) => allowedUsers.push(user.id));
           msg.reply(
@@ -69,8 +73,24 @@ client.on("message", (msg) => {
               (user) => `${msg.guild.member(user).displayName} `
             )}`
           );
-        }
+        } else console.log("This command can only be used by an admin.");
         break;
+
+      case "toggle":
+        if (isAdmin) {
+          const command = msg.cleanContent.replace(/^~toggle\s*/g, "");
+
+          if (command in featureToggle) {
+            featureToggle[command] = !featureToggle[command];
+            console.log(
+              `${command} command has been ${
+                featureToggle[command] ? "enabled" : "disabled"
+              }.`
+            );
+          } else console.log("Feature not recognized or cannot be toggled");
+        } else console.log("This command can only be used by an admin.");
+        break;
+
       default:
         msg.reply("Command not recognised.");
     }
@@ -78,6 +98,8 @@ client.on("message", (msg) => {
 });
 
 client.on("voiceStateUpdate", async (prevState, newState) => {
+  if (featureToggle["join-message"]) return;
+
   const broadcast = client.voice.createBroadcast();
   if (
     channelCheck(prevState, newState) === "joined" &&
